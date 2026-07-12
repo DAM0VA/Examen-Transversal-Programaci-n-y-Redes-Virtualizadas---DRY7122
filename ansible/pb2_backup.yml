@@ -1,0 +1,16 @@
+---
+- name: Item 6.2 - Respaldo de la configuracion del router
+  hosts: routers
+  gather_facts: no
+  tasks:
+    - name: Obtener show running-config
+      ios_command:
+        commands:
+          - show running-config
+      register: salida
+
+    - name: Guardar el respaldo en un archivo
+      copy:
+        content: "{{ salida.stdout[0] }}"
+        dest: "./backup_router.txt"
+      delegate_to: localhost

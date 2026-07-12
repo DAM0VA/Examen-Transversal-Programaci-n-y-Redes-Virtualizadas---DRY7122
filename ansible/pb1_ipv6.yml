@@ -1,0 +1,11 @@
+---
+- name: Item 6.1 - Configurar IPv6 en Loopback44
+  hosts: routers
+  gather_facts: no
+  tasks:
+    - name: Asignar IPv6 y link-local a Loopback44
+      cisco.ios.ios_config:
+        lines:
+          - ipv6 address 3001:ABCD:ABCD:4::4/128
+          - ipv6 address FE80::1 link-local
+        parents: interface Loopback44
